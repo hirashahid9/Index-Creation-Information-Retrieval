@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -126,7 +126,7 @@ public class Part2_WithoutHashMap {
                             int ind=termids.get(tempStr);
                             ind--;
                             
-                            if (termExists.get(ind).size() < docIndex)
+                            if (!termExists.get(ind).contains(docIndex)/*size() < docIndex*/)
                                                                        //first occurence of term in a document that is already in terms list
                             {    
                                 temp.docFreq=1;
@@ -134,11 +134,13 @@ public class Part2_WithoutHashMap {
                                  invertedIndex.add(temp); 
                                  termExists.get(ind).add(docIndex);
                                  termFirstPositionInDoc.get(ind).add(invertedIndex.size()-1);
+                                 
                             }
                             else
                             {
-                              int num=termFirstPositionInDoc.get(ind).get(docIndex-1);
-                              ListDetails templd=invertedIndex.get(num);
+                              //int num=termFirstPositionInDoc.get(ind).get(docIndex-1);
+                              int num=termFirstPositionInDoc.get(ind).get(termFirstPositionInDoc.get(ind).size()-1);
+                                ListDetails templd=invertedIndex.get(num);
                               templd.docFreq++;                  //subsequent occerences of term in a document
                               templd.listOfpositions.add(position);
                             }
@@ -237,29 +239,8 @@ public class Part2_WithoutHashMap {
             f.append(" ");
             f.append(Integer.toString(t.docFreq));
             f.append(" ");
-            /*
-            int b=1;
-            while(b<=t.map.size()){
+        
             
-            int j=0;
-            LinkedList<Integer> l;//=new LinkedList<Integer>();
-            l=t.map.get(b);
-            //System.out.println(l.size());
-            if(l!=null){
-            while(j<l.size())
-            {
-                
-                f.append(Integer.toString(b));
-                f.append(",");    
-                f.append(Integer.toString(l.get(j)));
-                f.append(" ");
-                j++;
-            }
-            }
-            b++;
-            }
-            
-            */
             int b=0;
             while(b<t.document.size())
             {
@@ -345,4 +326,14 @@ public class Part2_WithoutHashMap {
         } 
      
     }
+    public static void writeToFile(FileWriter fw,HashMap<String, Integer>termids,String tempStr) throws IOException
+     {
+          
+           fw.append(Integer.toString(termids.get(tempStr)));
+           fw.append("\t");
+           fw.append(tempStr);
+           fw.append("\n");
+             
+     }
+   
 }
