@@ -24,7 +24,7 @@ import org.tartarus.snowball.ext.englishStemmer;
  */
 public class Part2_WithoutHashMap {
     
-    static void listSortFiles(String path) throws Exception
+   static void listSortFiles(String path) throws Exception
     {
         File folder = new File(path);
         File[] files = folder.listFiles();
@@ -66,7 +66,7 @@ public class Part2_WithoutHashMap {
                 FileReader reader= new FileReader(file.getAbsolutePath());
                 String str=new String(Part2_UsingHashMap.extractText(reader));     //to remove html tags etc
                
-               // System.out.println(str);
+                System.out.println(str);
                 
                 
                 StringTokenizer st = new StringTokenizer(str, ":/;/.?@#^^&[]=; -''…�\\√´“®<>&+”’—\"»©‘–·*{}%|(),!\t\n");
@@ -116,7 +116,7 @@ public class Part2_WithoutHashMap {
                          
                         }
                         else
-                        { 
+                        {
                             ListDetails temp=new ListDetails();
                             
                             temp.dID=docids.get(file.getName());
@@ -126,7 +126,7 @@ public class Part2_WithoutHashMap {
                             int ind=termids.get(tempStr);
                             ind--;
                             
-                            if (termExists.get(ind)./*size() < docIndex*/contains(docIndex))
+                            if (!termExists.get(ind).contains(docIndex))
                                                                        //first occurence of term in a document that is already in terms list
                             {    
                                 temp.docFreq=1;
@@ -134,17 +134,17 @@ public class Part2_WithoutHashMap {
                                  invertedIndex.add(temp); 
                                  termExists.get(ind).add(docIndex);
                                  termFirstPositionInDoc.get(ind).add(invertedIndex.size()-1);
-                                 
                             }
                             else
                             {
-                            //int num=termFirstPositionInDoc.get(ind).get(docIndex-1);
-                             int num=termFirstPositionInDoc.get(ind).get(termFirstPositionInDoc.get(ind).size()-1);
+                            
+                               int num=termFirstPositionInDoc.get(ind).get(termFirstPositionInDoc.get(ind).size()-1);
+                              
                                 ListDetails templd=invertedIndex.get(num);
                               templd.docFreq++;                  //subsequent occerences of term in a document
                               templd.listOfpositions.add(position);
                             }
-                           System.out.print(index+"term found in document "+docIndex);
+       
                         }
                 }
                 }
@@ -161,18 +161,13 @@ public class Part2_WithoutHashMap {
         fw.close();
         fwDoc.close();
      
-       System.out.println("Sorting....");
+     
         Collections.sort(invertedIndex, new ListDetails());
             
-          System.out.println("Creating Postings....");
+        
         LinkedList<termDetailsWithoutHash> finalIndex=createPostingList(invertedIndex);
-        
-          System.out.println("Delta Encoding....");
         deltaEncoding(finalIndex,docids.size());
-        
-          System.out.println("Doc Delta Encoding....");
         docDeltaEncoding(finalIndex);
-          System.out.println("Writing index to file....");
         printIndex(finalIndex);
         
         
@@ -244,8 +239,7 @@ public class Part2_WithoutHashMap {
             f.append(" ");
             f.append(Integer.toString(t.docFreq));
             f.append(" ");
-        
-            
+          
             int b=0;
             while(b<t.document.size())
             {
@@ -331,7 +325,7 @@ public class Part2_WithoutHashMap {
         } 
      
     }
-    public static void writeToFile(FileWriter fw,HashMap<String, Integer>termids,String tempStr) throws IOException
+      public static void writeToFile(FileWriter fw,HashMap<String, Integer>termids,String tempStr) throws IOException
      {
           
            fw.append(Integer.toString(termids.get(tempStr)));
