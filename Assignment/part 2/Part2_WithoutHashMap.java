@@ -5,6 +5,7 @@
  */
 package main;
 
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -61,12 +62,11 @@ public class Part2_WithoutHashMap {
                 docids.put(file.getName(), docIndex);      //hash map to map documents to some integer(doc id) 
                 writeToFile(fwDoc, docids,file.getName()); //write doc name and docId in file
                       
-                System.out.println(file.getName());
+                System.out.println("Reading: "+file.getName());
                 
                 FileReader reader= new FileReader(file.getAbsolutePath());
                 String str=new String(Part2_UsingHashMap.extractText(reader));     //to remove html tags etc
                
-                System.out.println(str);
                 
                 
                 StringTokenizer st = new StringTokenizer(str, ":/;/.?@#^^&[]=; -''…�\\√´“®<>&+”’—\"»©‘–·*{}%|(),!\t\n");
@@ -161,13 +161,19 @@ public class Part2_WithoutHashMap {
         fw.close();
         fwDoc.close();
      
-     
+        System.out.println("Sorting....");
         Collections.sort(invertedIndex, new ListDetails());
-            
         
+        System.out.println("Creating Postinngs....");
         LinkedList<termDetailsWithoutHash> finalIndex=createPostingList(invertedIndex);
+        
+        System.out.println("Delta Encoding....");
         deltaEncoding(finalIndex,docids.size());
+        
+        System.out.println("Doc Encoding....");
         docDeltaEncoding(finalIndex);
+        
+        System.out.println("Printing Index....");
         printIndex(finalIndex);
         
         
@@ -247,7 +253,15 @@ public class Part2_WithoutHashMap {
                 LinkedList<Integer> temp=t.document.get(b).listOfPositions;
                 while(j < temp.size())
                 {
-                    f.append(Integer.toString(t.document.get(b).docId));
+                   
+                     if(j==0)
+                    {
+                        f.append(Integer.toString(t.document.get(b).docId));
+                    }
+                    else
+                    {
+                        f.append(Integer.toString(0));
+                    }
                     f.append(",");    
                     f.append(Integer.toString(temp.get(j)));
                     f.append(" ");

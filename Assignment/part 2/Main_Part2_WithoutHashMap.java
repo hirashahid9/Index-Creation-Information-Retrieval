@@ -25,7 +25,6 @@ public class Main {
     
     public static void main(String[] args) throws Exception{
        
-       //Part2_UsingHashMap.listFiles(C:\\Users\\hiras\\Desktop\\corpus");
        Part2_WithoutHashMap.listSortFiles("C:\\Users\\hiras\\Desktop\\corpus");
        
         

@@ -26,7 +26,7 @@ import org.tartarus.snowball.ext.englishStemmer;
  */
 public class Part2_UsingHashMap {
     
-      public static HashMap<String,Integer> termids = new HashMap<String,Integer>();
+    public static HashMap<String,Integer> termids = new HashMap<String,Integer>();
     public static  HashMap<String, Integer> docids = new HashMap<String, Integer>();
     public static HashMap<Integer, termDetails> invertedIndex = new HashMap<Integer, termDetails>();
         
@@ -36,7 +36,7 @@ public class Part2_UsingHashMap {
         File[] files = folder.listFiles();
                 
         FileWriter fw=new FileWriter("C:\\Users\\hiras\\Documents\\termids.txt"); 
-        File stoplist=new File("C:\\Users\\hiras\\Documents\\stoplist.txt");
+        File stoplist=new File("C:\\Users\\hiras\\Documents\\stoplist.txt");         //you have to give your own paths here
         FileWriter fwDoc=new FileWriter("C:\\Users\\hiras\\Documents\\docids.txt"); 
         
         HashMap< String,Integer> stopl = new HashMap<String,Integer>();
@@ -63,11 +63,10 @@ public class Part2_UsingHashMap {
                 writeToFile(fwDoc, docids,file.getName()); //write doc name and docId in file
                       
                 System.out.println(file.getName());
+                System.out.println("Reading: "+file.getName());
                 
                 FileReader reader= new FileReader(file.getAbsolutePath());
                 String str=new String(Part2_UsingHashMap.extractText(reader));     //to remove html tags etc
-               
-                System.out.println(str);
               
                 
                 StringTokenizer st = new StringTokenizer(str, ":/;/.?@#^^&[]=; -''…�\\√´“®<>&+”’—\"»©‘–·*{}%|(),!\t\n");
@@ -83,7 +82,7 @@ public class Part2_UsingHashMap {
                     
                     SnowballStemmer stemmer=new englishStemmer();
                     stemmer.setCurrent(tempS);
-                    stemmer.stem();
+                    stemmer.stem();             //for stemming
                     String tempStr=stemmer.getCurrent();
                     
                     
@@ -100,10 +99,10 @@ public class Part2_UsingHashMap {
                             t.termFrequency=1;
                             
                            
-                            object.add(position);
+                            object.add(position);   //add position of term 
                             t.map.put(docids.get(file.getName()),object );  //(docID,list of positions in doc)
                            
-                            
+                                                        
                             termids.put(tempStr,index);           //give this term a termID
                             writeToFile(fw, termids,tempStr);     //write term and termId in file
                             
@@ -114,17 +113,17 @@ public class Part2_UsingHashMap {
                         else
                         {
                              int index1=termids.get(tempStr);
-                             termDetails t=invertedIndex.get(index1);
+                             termDetails t=invertedIndex.get(index1);    
                              
                              t.termFrequency++;
                              
                              LinkedList<Integer> listOfPositions=t.map.get(docids.get(file.getName()));
-                             if(listOfPositions==null){
-                             t.docFrequency++;
+                             if(listOfPositions==null){   //terms first occurence in the documentt
+                             t.docFrequency++;            //but already present in any previous docs
                              
                              listOfPositions=new LinkedList<Integer>();
                              listOfPositions.add(position);
-                             t.map.put(docids.get(file.getName()), listOfPositions);
+                             t.map.put(docids.get(file.getName()), listOfPositions);  
                              }
                              
                              else{
@@ -135,42 +134,28 @@ public class Part2_UsingHashMap {
                     }
                 }
                       
-                docIndex++;
+                docIndex++;  //doc id
            }
             else if (file.isDirectory())
             {
                 listFiles(file.getAbsolutePath());
             }
         }
-         
-        deltaEncoding(invertedIndex,docids.size());
-        docDeltaEncoding(invertedIndex);
-       
+         System.out.println("....");
+        deltaEncoding(invertedIndex,docids.size());  //delta encoding of positions
+        docDeltaEncoding(invertedIndex);            //first moving docid,positions from hashmap
+                                                    //to linkedList then applying delta envoding on docs
         
         
-        writeIndexToFile(invertedIndex,docids.size());
+        writeIndexToFile(invertedIndex,docids.size());  //inverted index to file
         
         fw.close();
         fwDoc.close();
-        
-        
-        
-        System.out.println("Inverted Index: ");
-        int z=1;
-        while(z<invertedIndex.size())
-        {
-            System.out.print(z);
-            System.out.print("\t");
-           // termDetails t=invertedIndex.get(a);
-           
-            invertedIndex.get(z).printTermDetails();
-            System.out.print("\n");
-             z++;
-        }
          
     }
     public static void deltaEncoding(HashMap<Integer, termDetails> invertedIndex,int noOfDocs)
     {
+        System.out.println("Delta Encoding....");
            int a=1;
         while(a<=invertedIndex.size())
         {
@@ -184,12 +169,12 @@ public class Part2_UsingHashMap {
             LinkedList<Integer> l1=new LinkedList<Integer>();
             l=t.map.get(b);
             if(l!=null){
-               Collections.sort(l);
+               Collections.sort(l);   //sorting ths positions in list
                int x=l.size()-1;
                while(x>0)
                {
                   int no=l.get(x)-l.get(x-1);
-                  l.removeLast();
+                  l.removeLast();          //apply delta encoding and moving to another list
                   l1.addFirst(no);
                   //l.addLast(no);
                   x--;
@@ -207,14 +192,14 @@ public class Part2_UsingHashMap {
     
     public static void docDeltaEncoding(HashMap<Integer, termDetails> invertedIndex)
     {
-          
+           System.out.println("Doc Delta Encoding....");
           HashMap<Integer,LinkedList<Integer>> templist=null;
         for(int i=1;i<=invertedIndex.size();i++)
         {
             LinkedList<docDetails> dl=new LinkedList<docDetails>();
             int size=0;
             termDetails t=invertedIndex.get(i);
-            templist=t.map;
+            templist=t.map;                  //to move hashmap<docids,listOfPositions> to a LinkeList
             
             for(int k=1;size<templist.size();k++)
             {
@@ -232,7 +217,7 @@ public class Part2_UsingHashMap {
             }
             
             LinkedList<docDetails> finaldl=new LinkedList<docDetails>();
-             int x=dl.size()-1;
+             int x=dl.size()-1;            //applying delta encoding on docs
                while(x>0)
                {
                   int no=dl.get(x).docId-dl.get(x-1).docId;
@@ -259,6 +244,7 @@ public class Part2_UsingHashMap {
      {
         FileWriter f=new FileWriter("C:\\Users\\hiras\\Documents\\term_index.txt"); 
            
+         System.out.println("Writing index to file....");
         int a=1;
         while(a<=invertedIndex.size())
         {
@@ -278,7 +264,14 @@ public class Part2_UsingHashMap {
                 LinkedList<Integer> temp=t.document.get(b).listOfPositions;
                 while(j < temp.size())
                 {
-                    f.append(Integer.toString(t.document.get(b).docId));
+                    if(j==0)
+                    {
+                        f.append(Integer.toString(t.document.get(b).docId));
+                    }
+                    else
+                    {
+                        f.append(Integer.toString(0));
+                    }
                     f.append(",");    
                     f.append(Integer.toString(temp.get(j)));
                     f.append(" ");
@@ -310,7 +303,7 @@ public class Part2_UsingHashMap {
             str=bufreader.readLine();
         }
         
-        return Jsoup.parse(strbuffer.toString()).text();
+        return Jsoup.parse(strbuffer.toString()).text();   //yo parse and remove html tags
     }
      
      public static void writeToFile(FileWriter fw,HashMap<String, Integer>termids,String tempStr) throws IOException
@@ -322,42 +315,6 @@ public class Part2_UsingHashMap {
            fw.append("\n");
              
      }
-    
-    public static void main(String[] args)  throws Exception{
-
-       // listFiles("C:\\Users\\hiras\\Desktop\\corpus");
-       listFiles("C:\\Users\\hiras\\Downloads\\temp");
-      // withoutHashMap.listSortFiles("C:\\Users\\hiras\\Downloads\\temp");
-      // withoutHashMap.listSortFiles("C:\\Users\\hiras\\Desktop\\corpus");
-         if(args.length!=1)
-         {
-           System.out.println("Invalid Information. Please enter word to be retrieved.");
-         }
-         else{
-         
-         String term=new String(args[0]);
-         
-         SnowballStemmer stemmer=new englishStemmer();
-         stemmer.setCurrent(term);
-         stemmer.stem();
-         String tempStr=stemmer.getCurrent();
-         
-         if(termids.containsKey(tempStr))
-         {
-              int id=termids.get(tempStr);
-            termDetails t=invertedIndex.get(id);
-            System.out.println("Listings for the term: "+term);
-            System.out.println("Term id: " +  id);
-            System.out.println("Number of documents containing term: "+t.docFrequency);
-            System.out.println("Term frequency in corpus: "+t.termFrequency);
-         }
-         else
-         {
-           System.out.println("Term not found in corpus.");
-         }
-         
-        
-         }
-    }
+   
     
 }

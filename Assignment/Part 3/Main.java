@@ -23,7 +23,6 @@ public class Main {
   
     public static void main(String[] args)  throws Exception{
 
-        
         Part2_UsingHashMap.listFiles("C:\\Users\\hiras\\Desktop\\corpus");
 
          if(args.length!=1)
@@ -39,10 +38,10 @@ public class Main {
          stemmer.stem();
          String tempStr=stemmer.getCurrent();
          
-         if(termids.containsKey(tempStr))
+         if(Part2_UsingHashMap.termids.containsKey(tempStr))
          {
-              int id=termids.get(tempStr);
-            termDetails t=invertedIndex.get(id);
+              int id=Part2_UsingHashMap.termids.get(tempStr);
+            termDetails t=Part2_UsingHashMap.invertedIndex.get(id);
             System.out.println("Listings for the term: "+term);
             System.out.println("Term id: " +  id);
             System.out.println("Number of documents containing term: "+t.docFrequency);
