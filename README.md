@@ -9,9 +9,9 @@ PART 1
 5.The path of stoplist.txt,termids.txt,docids.txt are hard coded. Please change them while runing code.
 
 Part 2
-1. Run main for Part2_UsingHashMap.txt to create invertedIndex
-2. Run main for Part2_WithoutHashMap.txt to create invertedIndex
+1. Run main for Part2_UsingHashMap.txt to create invertedIndex by using Hashmap.
+2. Run main for Part2_WithoutHashMap.txt to create invertedIndex by using Sorting of termid,docid pairs.
 
 Part 3
 Give to word to be searched as command line argument.
-It is wrt Part2_UsingHashMap.txt
+It is with respest to Part2_UsingHashMap.txt
