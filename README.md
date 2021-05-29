@@ -7,7 +7,7 @@ It contains three parts:
 Part 1. Making an index using Hashmaps or dictionary
 Part 2. Making an index without Hashmaps or dictionary ( by sorting termid-docid pairs)
 The difference in time of the execution of above two parts makes it evident that termid-docid pairs should be sorted.
-Part 3. Write a word as command line argument. We will gget the termid, frequency of term in corpus and no of ocuments containing the term.
+Part 3. Write a word as command line argument. We will gget the termid, frequency of term in corpus and no of documents containing the term.
 ![image](https://user-images.githubusercontent.com/55246052/120069101-8b09b600-c09d-11eb-8142-a5c02a9731fd.png)
 
 
