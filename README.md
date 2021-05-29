@@ -68,6 +68,6 @@ follows:
 3. 567: Total number of documents in which the term appears
 4. 432: Document Id in which term appears
 5. 43: Position of term in document 432
-6. 
+ 
 In order to support more efficient compression, delta encoding is applied to the inverted list.
 
