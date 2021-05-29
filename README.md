@@ -1,13 +1,17 @@
 # Index Creation
 Project to make an inverted index
 
-Purpose:
+PURPOSE:
 The purpose of this project was to make an inverted index from the corpus, which contains list of documents. It will establish the understanding of how the web makes an index from all the web pages. And how do we get the documents after writing a query on search engine. 
+
 It contains three parts:
+
 Part 1. Making an index using Hashmaps or dictionary
+
 Part 2. Making an index without Hashmaps or dictionary ( by sorting termid-docid pairs)
 The difference in time of the execution of above two parts makes it evident that termid-docid pairs should be sorted.
-Part 3. Write a word as command line argument. We will gget the termid, frequency of term in corpus and no of documents containing the term.
+
+Part 3. Write a word as command line argument. We will get the termid, frequency of term in corpus and no of documents containing the term.
 ![image](https://user-images.githubusercontent.com/55246052/120069101-8b09b600-c09d-11eb-8142-a5c02a9731fd.png)
 
 
@@ -27,6 +31,7 @@ Part 2
 Part 3
 Give to word to be searched as command line argument.
 It is with respest to Part2_UsingHashMap.txt
+
 
 
 WORKING:
@@ -50,16 +55,19 @@ separated by a tab, as follows:
 567\tapple
 
 Step 2: Inverted Index
- term_index.txt – An inverted index containing the file position for each occurrence of
+
+The file term_index.txt – An inverted index containing the file position for each occurrence of
 each term in the collection. Each line should contain the complete inverted list for a
 single term. Each line should contain a list of DOCID,POSITION values. Each line of
 this file should contain a TERMID followed by a space-separated list of properties as
 follows:
+
 347 1542 567 432,43 456,33 456,41
-o 347: TERMID
-o 1542: Total number of occurrences of the term in the entire corpus
-o 567: Total number of documents in which the term appears
-o 432: Document Id in which term appears
-o 43: Position of term in document 432
+1. 347: TERMID
+2. 1542: Total number of occurrences of the term in the entire corpus
+3. 567: Total number of documents in which the term appears
+4. 432: Document Id in which term appears
+5. 43: Position of term in document 432
+6. 
 In order to support more efficient compression, delta encoding is applied to the inverted list.
 
