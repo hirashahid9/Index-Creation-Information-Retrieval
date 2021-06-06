@@ -22,7 +22,7 @@ Use Netbeans/Eclipse/IntelliJ IDE and attach the libraries from libraries folder
 
 Java 8 or higher
 
-## PART 1 ##
+## Part 1 ##
 1.First give corpus path as command line argument.(for part 2 and 3 i have hardcoded file path)
 
 2.If corpus exists then it will read all files in corpus and assign termids and docids.
@@ -47,7 +47,7 @@ It is with respest to Part2_UsingHashMap.txt
 
 # Internal Working
 
-## Step 1 ##
+## Step 1: Creating termids.txt and docids.txt ##
 
 1. Accept a directory name as a command line argument, and process all files found in that
 directory
