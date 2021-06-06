@@ -18,7 +18,9 @@ Part 3. Write a word as command line argument. We will get the termid, frequency
 
 
 # Execution Instructions
-Use Netbeans IDE and attach the libraries from libraries folder.
+Use Netbeans/Eclipse/IntelliJ IDE and attach the libraries from libraries folder.
+
+Java 8 or higher
 
 # PART 1
 1.First give corpus path as command line argument.(for part 2 and 3 i have hardcoded file path)
