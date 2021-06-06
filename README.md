@@ -22,7 +22,7 @@ Use Netbeans/Eclipse/IntelliJ IDE and attach the libraries from libraries folder
 
 Java 8 or higher
 
-# PART 1
+## PART 1 ##
 1.First give corpus path as command line argument.(for part 2 and 3 i have hardcoded file path)
 
 2.If corpus exists then it will read all files in corpus and assign termids and docids.
@@ -33,12 +33,12 @@ Java 8 or higher
 
 5.The path of stoplist.txt,termids.txt,docids.txt are hard coded. Please change them while runing code.
 
-# Part 2
+## Part 2 ##
 1. Run main for Part2_UsingHashMap.txt to create invertedIndex by using Hashmap.
 
 2. Run main for Part2_WithoutHashMap.txt to create invertedIndex by using Sorting of termid,docid pairs.
 
-# Part 3
+## Part 3 ##
 Give to word to be searched as command line argument.
 
 It is with respest to Part2_UsingHashMap.txt
@@ -46,6 +46,8 @@ It is with respest to Part2_UsingHashMap.txt
 
 
 # Internal Working
+
+## Step 1 ##
 
 1. Accept a directory name as a command line argument, and process all files found in that
 directory
@@ -73,7 +75,7 @@ integer, its TERMID. Each line should be formatted with a TERMID and token
 separated by a tab, as follows:
 567\tapple
 
-# Step 2: Inverted Index
+## Step 2: Inverted Index ##
 
 The file term_index.txt – An inverted index containing the file position for each occurrence of
 each term in the collection. Each line should contain the complete inverted list for a
